@@ -8,7 +8,7 @@ metadata:
     app.kubernetes.io/part-of: vote-app
   name: vote-ui
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: vote-ui
