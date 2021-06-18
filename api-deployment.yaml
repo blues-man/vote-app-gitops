@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+  labels:
+    app: vote-api
+    app.kubernetes.io/part-of: vote-app
+  name: vote-api
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: vote-api
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: vote-api
+    spec:
+      containers:
+      - image: quay.io/openshift-pipeline/vote-api:latest
+        imagePullPolicy: Always
+        name: vote-api
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
