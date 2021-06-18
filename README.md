@@ -1,1 +1,1 @@
-# vote-app-gitops
+# Vote App for Argo CD
