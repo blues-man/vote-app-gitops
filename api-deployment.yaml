@@ -6,6 +6,7 @@ metadata:
   labels:
     app: vote-api
     app.kubernetes.io/part-of: vote-app
+    app.kubernetes.io/name: golang
   name: vote-api
 spec:
   replicas: 1
