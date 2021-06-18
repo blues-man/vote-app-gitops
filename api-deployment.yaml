@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
+    app.openshift.io/vcs-uri: 'https://github.com/blues-man/pipelines-vote-api.git'
+    app.openshift.io/vcs-ref: 'master'
   labels:
     app: vote-api
     app.kubernetes.io/part-of: vote-app
