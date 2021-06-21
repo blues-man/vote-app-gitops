@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vote-app-dev
+  namespace: openshift-gitops
+project: default
+source:
+ repoURL: 'https://github.com/blues-man/vote-app-gitops'
+ path: .
+ targetRevision: develop
+destination:
+ server: 'https://kubernetes.default.svc'
+ namespace: vote-app-dev
+syncPolicy:
+ automated:
+   prune: true
+   selfHeal: false
+ syncOptions:
+   - CreateNamespace=true
