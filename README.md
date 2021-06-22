@@ -276,6 +276,8 @@ From right side menu, click **Start**.
 
 In **GIT_REPO** use your fork of the **vote-api** repo
 
+In **IMAGE_NAME** put your **vote-api** container image from Quay.io
+
 Leave all other settings as default.
 
 Select **PVC** under **Workspace** section and select **vote-api-pvc** persistent volume claim.
