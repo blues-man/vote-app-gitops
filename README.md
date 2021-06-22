@@ -322,7 +322,7 @@ NOTE: you can also trigger the Pipeline start by changing and pushing the code a
 ![Vote UI Security scan](images/quay-vote-ui-scan.png)
 
 
-### 2. Argo CD
+### 2. Argo CD for DEV project
 
 We will pre-deploy the DEV environment in the **vote-app-dev** project.
 
@@ -361,5 +361,149 @@ syncPolicy:
 oc apply -f argo/vote-app-dev.yaml
 ```
 
+![Vote App Dev](images/argocd-vote-app-dev.png)
 
+![Vote App Dev details](images/argocd-vote-app-dev-details.png)
+
+
+#### 1. Verify App deployment
+
+Go to **Topology** view in **vote-app-dev** Project.
+
+![Vote App Dev view](images/topology-vote-app-dev.png)
+
+#### 2. Access the app
+
+Access the app from vote-ui **Route** clicking on the Python icon and then accessing Route URL.
+
+![Vote App UI](images/vote-ui.png)
+
+
+#### 3. Edit app in CodeReady Workspaces
+
+
+Edit source code from CRW by clicking on the little crw icon next to the **vote-ui** in the Topology view. This will launch Eclipse Che Factory reading the dev environment from the Devfile in the vote-ui repository.
+
+This will open CRW and you can demo how to edit and run the app from an IDE.
+
+In CRW, from **Run Tasks** click **Install dependencies** and **Run Python app**.
+
+This will open an embedded window with the app running locally.
+
+![CRW Vote App](images/crw-vote-ui.png)
+
+
+#### 4. Detect drifts
+
+Let Argo CD detect a drift between what declared in Git and what it is available in the cluster.
+
+Change **vote-ui** replicas to 2 from OpenShift and verify the status is **Out of Sync** on Argo CD.
+
+![Out of Sync](images/argocd-vote-app-dev-out-of-sync.png)
+
+#### 5. Sync the app
+
+Sync manually the app from the Argo CD console, as we declared in our `Application` that we don't want to _self-heal_ for DEV project.
+
+From top menu, click **SYNC**.
+
+From right side window, click **SYNCHRONIZE** and leave default settings.
+
+This will rollback the **vote-ui** deployment replicas to 1.
+
+
+### 3. Argo CD for PROD project
+
+We create the PROD environment directly from Argo CD Web console this time.
+
+From homepage, click on top-left to the **+NEW APP** button.
+
+Under **General**:
+
+* **Application**: vote-app-prod
+* **Project**: default
+* **Sync Policy**: Automatic
+** Prune resources
+** Self Heal
+* **Sync Options**: Auto-create namespace
+
+
+Under **Source** section:
+
+* **Reposiroty URL**: https://github.com/blues-man/vote-app-gitops
+* **Revision**: main
+* **Path**: k8s
+
+Under **Destination** section:
+
+* **Cluster URL**: https://kubernetes.default.svc
+* **Namespace**: vote-app-prod
+
+Click **CREATE**
+
+
+![Create Vote App Prod](images/argocd-create-vote-app-prod.png)
+
+Review auto-generated `Application` manifest:
+
+
+```yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vote-app-prod
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: vote-app-prod
+    server: https://kubernetes.default.svc 
+  project: default 
+  source: 
+    path: k8s/
+    repoURL: https://github.com/blues-man/vote-app-gitops
+    targetRevision: main
+  syncPolicy: 
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
+```
+
+#### 1. Review deployment order
+
+PROD environment is using Sync Waves, this means Kubernetes manifests in the _main_ branch are
+annotated with sync weves to order manifests deployment.
+
+```yaml
+metadata:
+  annotations:
+    argocd.argoproj.io/sync-wave: "0"
+```
+
+1. API Deployment
+2. API Service
+3. UI Deployment
+4. UI Service
+5. UI Route
+
+
+![Create Vote App Prod](images/argocd-create-vote-app-prod-sync.png)
+
+#### 2. Auto detect drift
+
+Change **vote-ui** replicas to 2 from OpenShift Web Console, Argo CD will automatically sync and auto-heal in this case.
+
+
+![Vote App Prod](images/argocd-vote-app-prod.png)
+
+### 4. Make a change to PROD from GitHub with a Pull Request
+
+1. Create a new feature branch in the GitHub repo called **feature-ha**
+2. Change **ui-deployment.yaml** with ```replicas:2```
+3. Create PR
+4. Merge into main
+5. Prod app is with 2 replicas
+
+![Vote App Prod Scaled](images/topology-vote-app-prod-scaled.png)
 
