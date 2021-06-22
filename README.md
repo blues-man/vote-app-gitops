@@ -6,10 +6,10 @@ The aim of this demo is to show how to interconnect [Tekton](https://tekton.dev/
 
 The flow of this demo is:
 
-* Create and start manually or automatically pipelines to build container images
+* Create and start manually or automatically [OpenShift Pipelines](https://www.openshift.com/learn/topics/ci-cd) to build container images
 * Edit code from [CodeReady Workspaces](https://developers.redhat.com/products/codeready-workspaces/overview)
-* Scan container images with Quay.io
-* Sync application in Dev and Prod environments
+* Scan container images with [Quay.io](https://quay.io)
+* Sync application with [OpenShift GitOps](https://www.openshift.com/learn/topics/gitops/) in Dev and Prod environments
 
 The demo is based on the [Vote App](https://github.com/openshift/pipelines-tutorial) 2-tier app (Python Flask frontend + Go backend):
 
