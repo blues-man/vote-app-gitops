@@ -507,3 +507,6 @@ Change **vote-ui** replicas to 2 from OpenShift Web Console, Argo CD will automa
 
 ![Vote App Prod Scaled](images/topology-vote-app-prod-scaled.png)
 
+![Vote App Prod](images/vote-ui2.png)
+
+
