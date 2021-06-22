@@ -446,8 +446,8 @@ Under **General**:
 * **Application**: vote-app-prod
 * **Project**: default
 * **Sync Policy**: Automatic
-** Prune resources
-** Self Heal
+* * Prune resources: true
+* * Self Heal: true
 * **Sync Options**: Auto-create namespace
 
 
