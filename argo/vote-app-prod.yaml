@@ -3,17 +3,18 @@ kind: Application
 metadata:
   name: vote-app-prod
   namespace: openshift-gitops
-project: default
-source:
- repoURL: 'https://github.com/blues-man/vote-app-gitops'
- path: .
- targetRevision: main
-destination:
- server: 'https://kubernetes.default.svc'
- namespace: vote-app-prod
-syncPolicy:
- automated:
-   prune: true
-   selfHeal: true
- syncOptions:
-   - CreateNamespace=true
+spec:
+  destination:
+    namespace: vote-app-prod
+    server: https://kubernetes.default.svc 
+  project: default 
+  source: 
+    path: k8s/
+    repoURL: https://github.com/blues-man/vote-app-gitops
+    targetRevision: main
+  syncPolicy: 
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+    - CreateNamespace=true
