@@ -488,7 +488,7 @@ metadata:
 5. UI Route
 
 
-![Create Vote App Prod](images/argocd-create-vote-app-prod-sync.png)
+![Create Vote App Prod](images/argocd-vote-app-prod-sync.png)
 
 #### 2. Auto detect drift
 
