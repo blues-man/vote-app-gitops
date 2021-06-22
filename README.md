@@ -309,7 +309,28 @@ Finally, click on **Add Webhook**.
 
 ![Vote UI Web Hook](images/webhook-vote-ui.png)
 
-Do some change to the source and verify that the pipeline starts.
+
+NOTE: If you forked the repo, update the `TriggerTemplate` with your fork otherwise it will fallback to `quay.io/bluesman/vote-ui`
+
+```bash
+oc edit triggertemplate vote-ui
+```
+
+```yaml
+...
+    spec:
+      params:
+      - name: APP_NAME
+        value: $(tt.params.git-repo-name)
+      - name: GIT_REPO
+        value: $(tt.params.git-repo-url)
+      - name: GIT_REVISION
+        value: $(tt.params.git-revision)
+      - name: IMAGE_NAME
+        value: quay.io/<your-username>/<your-repo>
+```
+
+Do some change to the source code and verify that the pipeline starts.
 
 ![Vote UI Pipeline start](images/pipeline-vote-ui-start.png)
 
