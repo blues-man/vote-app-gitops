@@ -128,6 +128,11 @@ In the **OperatorHub**, search for *OpenShift GitOps* and follow the operator in
 
 ![OpenShift GitOps operator](https://raw.githubusercontent.com/siamaksade/openshift-gitops-getting-started/1.1/images/gitops-03.png)
 
+**IMPORTANT** Give permission to the Argo CD service account to control the cluster:
+```bash
+oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
+```
+
 Once OpenShift GitOps is installed, an instance of Argo CD is automatically installed on the cluster in the `openshift-gitops` namespace and link to this instance is added to the application launcher in OpenShift Web Console.
 
 ![Application Launcher](https://raw.githubusercontent.com/siamaksade/openshift-gitops-getting-started/1.1/images/gitops-04.png)
