@@ -364,7 +364,7 @@ git clone -b develop https://github.com/blues-man/vote-app-gitops.git
 cd vote-app-gitops
 ```
 
-2. Update Argo CD application with your fork for deployment the app to DEV environment
+2. Update Argo CD application **repoURL** with your fork, this will be used to deploy the app to the DEV environment
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -390,6 +390,8 @@ syncPolicy:
 3. Update all references to quay.io with your repos for vote-ui and vote-api images:
 ```bash
 sed -i 's/bluesman/yourquayuser/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
+git commit
+git push
 ```
 4. Create Argo CD Application to deploy DEV env
 ```bash
