@@ -212,7 +212,7 @@ oc secret link pipeline quay-secret
 In order to enable webhooks, fork source code repos to use them in pipelines:
 
 * [vote-api](https://github.com/blues-man/pipelines-vote-api)
-* [vote-io](https://github.com/blues-man/pipelines-vote-api)
+* [vote-ui](https://github.com/blues-man/pipelines-vote-ui)
 
 
 4. Clone vote-api repo
