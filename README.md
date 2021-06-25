@@ -389,7 +389,7 @@ syncPolicy:
 ```
 3. Update all references to quay.io with your repos for vote-ui and vote-api images:
 ```bash
-sed -i 's/bluesman/yourgithubuserfork/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
+sed -i 's/bluesman/yourquayuser/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
 ```
 4. Create Argo CD Application to deploy DEV env
 ```bash
@@ -455,7 +455,7 @@ Before doing that, update all the references to quay.io with your images also fo
 
 ```bash
 git checkout main
-sed -i 's/bluesman/yourgithubuserfork/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
+sed -i 's/bluesman/yourquayuser/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
 git commit
 git push
 ```
