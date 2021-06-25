@@ -349,14 +349,15 @@ NOTE: you can also trigger the Pipeline start by changing and pushing the code a
 
 We will pre-deploy the DEV environment in the **vote-app-dev** project.
 
-1. Clone this repository in the **develop** branch:
+1. Fork this repository
+2. Clone your repository fork in the **develop** branch:
 
 ```bash
 git clone -b develop https://github.com/blues-man/vote-app-gitops.git
 cd vote-app-gitops
 ```
 
-2. Verify and apply Argo CD application for DEV
+2. Update Argo CD application with your fork for deployment the app to DEV environment
 
 ```yaml
 apiVersion: argoproj.io/v1alpha1
@@ -379,7 +380,11 @@ syncPolicy:
  syncOptions:
    - CreateNamespace=true
 ```
-
+3. Update all references to quay.io with your repos for vote-ui and vote-api images:
+```bash
+sed -i 's/bluesman/yourgithubuserfork/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml```
+```
+4. Create Argo CD Application to deploy DEV env
 ```bash
 oc apply -f argo/vote-app-dev.yaml
 ```
@@ -453,7 +458,7 @@ Under **General**:
 
 Under **Source** section:
 
-* **Reposiroty URL**: https://github.com/blues-man/vote-app-gitops
+* **Reposiroty URL**: Add your forked repo, e.g. https://github.com/blues-man/vote-app-gitops
 * **Revision**: main
 * **Path**: k8s
 
