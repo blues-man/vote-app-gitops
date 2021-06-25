@@ -317,7 +317,7 @@ Finally, click on **Add Webhook**.
 ![Vote UI Web Hook](images/webhook-vote-ui.png)
 
 
-NOTE: If you forked the repo, update the `TriggerTemplate` with your fork otherwise it will fallback to `quay.io/bluesman/vote-ui`
+NOTE: If you forked the repo, update the `TriggerTemplate` with your vote-ui repo on quay.io reference adding the `IMAGE_NAME` parameter, otherwise it will fallback to `quay.io/bluesman/vote-ui`:
 
 ```bash
 oc edit triggertemplate vote-ui
@@ -334,7 +334,7 @@ oc edit triggertemplate vote-ui
       - name: GIT_REVISION
         value: $(tt.params.git-revision)
       - name: IMAGE_NAME
-        value: quay.io/<your-username>/<your-repo>
+        value: quay.io/<your-username>/vote-ui
 ```
 
 Do some change to the source code and verify that the pipeline starts.
@@ -389,7 +389,7 @@ syncPolicy:
 ```
 3. Update all references to quay.io with your repos for vote-ui and vote-api images:
 ```bash
-sed -i 's/bluesman/yourgithubuserfork/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml```
+sed -i 's/bluesman/yourgithubuserfork/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
 ```
 4. Create Argo CD Application to deploy DEV env
 ```bash
@@ -451,7 +451,16 @@ This will rollback the **vote-ui** deployment replicas to 1.
 
 We create the PROD environment directly from Argo CD Web console this time.
 
-From homepage, click on top-left to the **+NEW APP** button.
+Before doing that, update all the references to quay.io with your images also for the **main** branch.
+
+```bash
+git checkout main
+sed -i 's/bluesman/yourgithubuserfork/g' k8s/api-deployment.yaml k8s/ui-deployment.yaml
+git commit
+git push
+```
+
+Access Argo CD Web console, from homepage click on top-left to the **+NEW APP** button.
 
 Under **General**:
 
@@ -530,9 +539,9 @@ metadata:
 
 Verify vote-ui and vote-api are deployed also in **vote-app-prod** project now.
 
-NOTE: CodeReady Workspaces icon because we haven't annoted the Deployment for that, as this is a Prod app!
+NOTE: CodeReady Workspaces icons are not present in the Topology view this time, because we haven't annoted the Deployment for that, as this is a Prod app!
 
-#### 2. Auto detect drift
+#### 3. Auto detect drift
 
 Change **vote-ui** replicas to 2 from OpenShift Web Console, Argo CD will automatically sync and auto-heal in this case.
 
@@ -551,4 +560,5 @@ Change **vote-ui** replicas to 2 from OpenShift Web Console, Argo CD will automa
 
 ![Vote App Prod](images/vote-ui2.png)
 
+Well done!
 
