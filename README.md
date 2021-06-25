@@ -436,6 +436,8 @@ Let Argo CD detect a drift between what declared in Git and what it is available
 
 Change **vote-ui** replicas to 2 from OpenShift and verify the status is **Out of Sync** on Argo CD.
 
+TIP: if the dashboard page doesn't update, try to hit the Refresh button from the Argo CD web console
+
 ![Out of Sync](images/argocd-vote-app-dev-out-of-sync.png)
 
 #### 5. Sync the app
