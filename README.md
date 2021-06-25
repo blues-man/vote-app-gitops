@@ -293,7 +293,7 @@ Tekton supports **Tekton Triggers** to enable automation and web hooks to Pipeli
 
 ![Triggers](images/pipeline-triggers.png)
 
-From **Topology** view, click to **vote-ui** Deployment, go into Routes section and and copy the **el-vote-ui**  Route URL.
+From **Topology** view, click to **el-vote-ui** Deployment, go into Routes section and and copy the **el-vote-ui**  Route URL.
 
 ![Vote API Pipeline](images/el-trigger-vote-ui.png)
 
@@ -301,7 +301,7 @@ Once you have the URL copied to your clipboard, navigate to the code repository 
 
 From your fork page top-right menu, click **Settings**. Then from result left-side menu, click **Webhook**, then from right side click **Add webhooks**.
 
-In the next screen, paste your link into the **Payload URL** field. You can leave the secret token field blank — the secret is already in the URL and does not need to be in the payload.
+In the next screen, paste your link into the **Payload URL** field. You can leave the secret token field blank.
 
 Change the Content Type to **application/json**.
 
