@@ -356,7 +356,7 @@ NOTE: you can also trigger the Pipeline start by changing and pushing the code a
 
 We will pre-deploy the DEV environment in the **vote-app-dev** project.
 
-1. Fork this repository
+1. Fork this [vote-app-gitops](https://github.com/blues-man/vote-app-gitops) repository 
 2. Clone your repository fork in the **develop** branch:
 
 ```bash
@@ -505,6 +505,7 @@ spec:
     - CreateNamespace=true
 ```
 
+
 #### 1. Review deployment order
 
 PROD environment is using Sync Waves, this means Kubernetes manifests in the _main_ branch are
@@ -524,6 +525,12 @@ metadata:
 
 
 ![Create Vote App Prod](images/argocd-vote-app-prod-sync.png)
+
+#### 2. Verify app is deployed in vote-app-prod Project
+
+Verify vote-ui and vote-api are deployed also in **vote-app-prod** project now.
+
+NOTE: CodeReady Workspaces icon because we haven't annoted the Deployment for that, as this is a Prod app!
 
 #### 2. Auto detect drift
 
