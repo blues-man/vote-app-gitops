@@ -128,6 +128,8 @@ In the **OperatorHub**, search for *OpenShift GitOps* and follow the operator in
 
 ![OpenShift GitOps operator](https://raw.githubusercontent.com/siamaksade/openshift-gitops-getting-started/1.1/images/gitops-03.png)
 
+##### Add permission to Argo CD service account
+
 **IMPORTANT** Give permission to the Argo CD service account to control the cluster:
 ```bash
 oc adm policy add-cluster-role-to-user cluster-admin -z openshift-gitops-argocd-application-controller -n openshift-gitops
