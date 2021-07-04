@@ -29,7 +29,7 @@ spec:
           value: vote-api
         - name: VOTING_API_SERVICE_PORT
           value: "9000"
-        image: quay.io/bluesman/vote-ui:latest
+        image: quay.io/stephane.leclerc/vote-ui:latest
         imagePullPolicy: Always
         name: vote-ui
         ports:

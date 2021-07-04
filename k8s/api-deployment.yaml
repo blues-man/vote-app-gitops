@@ -24,7 +24,7 @@ spec:
         app: vote-api
     spec:
       containers:
-      - image: quay.io/bluesman/vote-api:latest
+      - image: quay.io/stephane.leclerc/vote-api:latest
         imagePullPolicy: Always
         name: vote-api
         ports:
