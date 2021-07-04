@@ -1,0 +1,20 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: vote-app-dev
+  namespace: openshift-gitops
+spec:
+  destination:
+    namespace: vote-app-dev
+    server: https://kubernetes.default.svc 
+  project: default 
+  source: 
+    path: k8s/
+    repoURL: https://github.com/sleclercs/vote-app-gitops
+    targetRevision: develop
+  syncPolicy: 
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
