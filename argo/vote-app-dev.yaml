@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc 
   project: default 
   source: 
-    path: k8s/
+    path: environments/dev
     repoURL: https://github.com/blues-man/vote-app-gitops
     targetRevision: develop
   syncPolicy: 
