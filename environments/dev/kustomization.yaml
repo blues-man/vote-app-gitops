@@ -1,2 +1,8 @@
-bases:
-  - ../../k8s/
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- ../../k8s/
+images:
+- digest: sha256:32243f71e5eaedaac059d60cc8bb9df1ff47ef8a8838269973ee08c8125bfd60
+  name: quay.io/bluesman/vote-api
+  newName: quay.io/bluesman/vote-api
