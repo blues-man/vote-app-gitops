@@ -481,7 +481,7 @@ Under **Source** section:
 
 * **Reposiroty URL**: Add your forked repo, e.g. https://github.com/blues-man/vote-app-gitops
 * **Revision**: main
-* **Path**: k8s
+* **Path**: environments/prod
 
 Under **Destination** section:
 
@@ -508,7 +508,7 @@ spec:
     server: https://kubernetes.default.svc 
   project: default 
   source: 
-    path: k8s/
+    path: environments/prod
     repoURL: https://github.com/blues-man/vote-app-gitops
     targetRevision: main
   syncPolicy: 
