@@ -37,6 +37,11 @@ There are 2 branches:
 * **develop**: used to deploy and sync manifests in a **Dev** environment
 * **main**: used to deploy and sync manifests **Prod**, uses [Argo CD Sync Waves](https://argoproj.github.io/argo-cd/user-guide/sync-waves/) to order manifests sync.
 
+#### Create a Personal Access Token for GitHub
+
+The pipelines will update the Kubernetes manifests for the applications, so they need to push to the both Vote App UI and Vote App API repos.
+
+Create a [Personal Access Token](https://docs.github.com/en/github/authenticating-to-github/keeping-your-account-and-data-secure/creating-a-personal-access-token) for your user, it will be used later.
 
 ### Container Registry
 
@@ -205,14 +210,33 @@ oc new-project vote-ci
 ```bash
 oc create secret docker-registry quay-secret --docker-server=quay.io --docker-username=<QUAY_USERNAME> --docker-password=<ENCRYPTED_PASSWORD>
 ```
+3. Create a Secret with your GitHub Personal Access Token
 
+```yaml
+apiVersion: v1
+kind: Secret
+metadata:
+  name: git-user-pass
+  annotations:
+    tekton.dev/git-0: https://github.com
+type: kubernetes.io/basic-auth
+stringData:
+  username: <github user>
+  password: <github personal access token>
+```
+Save it to a file with your credentials and create the secret:
 
-3. Link Secret to pipeline Service Account.
+```bash
+oc create -f git-user-pass.yaml
+```
+
+3. Link Secrets to pipeline Service Account.
 
 NOTE: Pipelines Operator installs by default a `pipeline` Service Account in all projects. This service account is used to run non-privileged containers and builds across the cluster.  
 
 ```bash
 oc secret link pipeline quay-secret
+oc secret link pipeline git-user-pass
 ```
 
 4. Fork repos
