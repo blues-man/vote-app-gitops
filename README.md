@@ -372,20 +372,21 @@ kind: Application
 metadata:
   name: vote-app-dev
   namespace: openshift-gitops
-project: default
-source:
- repoURL: 'https://github.com/blues-man/vote-app-gitops'
- path: k8s/
- targetRevision: develop
-destination:
- server: 'https://kubernetes.default.svc'
- namespace: vote-app-dev
-syncPolicy:
- automated:
-   prune: true
-   selfHeal: false
- syncOptions:
-   - CreateNamespace=true
+spec:
+  destination:
+    namespace: vote-app-dev
+    server: https://kubernetes.default.svc 
+  project: default 
+  source: 
+    path: k8s/
+    repoURL: https://github.com/blues-man/vote-app-gitops
+    targetRevision: develop
+  syncPolicy: 
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+    - CreateNamespace=true
 ```
 3. Update all references to quay.io with your repos for vote-ui and vote-api images:
 ```bash
