@@ -1,2 +1,2 @@
-resources:
-- ../../k8s/
+bases:
+  - ../../k8s/
