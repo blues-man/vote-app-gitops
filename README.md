@@ -13,7 +13,8 @@ The flow of this demo is:
 
 The demo is based on the [Vote App](https://github.com/openshift/pipelines-tutorial) 2-tier app (Python Flask frontend + Go backend):
 
-![Vote App](images/topology.png)
+<img src="images/topology.png" width=400>
+
 
 ## Assets and repos
 
@@ -416,7 +417,8 @@ git push
 oc apply -f argo/vote-app-dev.yaml
 ```
 
-![Vote App Dev](images/argocd-vote-app-dev.png)
+<img src="images/argocd-vote-app-dev.png" width=500>
+
 
 ![Vote App Dev details](images/argocd-vote-app-dev-details.png)
 
@@ -431,8 +433,7 @@ Go to **Topology** view in **vote-app-dev** Project.
 
 Access the app from vote-ui **Route** clicking on the Python icon and then accessing Route URL.
 
-![Vote App UI](images/vote-ui.png)
-
+<img src="images/vote-ui.png" width=350>
 
 #### 3. Edit app in CodeReady Workspaces
 
@@ -580,7 +581,8 @@ Change **vote-ui** replicas to 2 from OpenShift Web Console, Argo CD will automa
 
 ![Vote App Prod Scaled](images/topology-vote-app-prod-scaled.png)
 
-![Vote App Prod](images/vote-ui2.png)
+<img src="images/vote-ui2.png" width=350>
+
 
 Well done!
 
