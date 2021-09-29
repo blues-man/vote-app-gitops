@@ -259,12 +259,13 @@ cd pipelines-vote-api
 
 Change the GitOps repo to your fork:
 ```bash
+sed -i 's/bluesman/yourquayuser/g' k8s/pipeline.yaml
 sed -i 's/blues-man/yourgithubuser/g' k8s/pipeline.yaml
 ```
 
 ```bash
 oc create -f k8s/vote-api-pvc.yaml
-oc create -f k8s/git-update-deployment-task.yaml.yaml
+oc create -f k8s/git-update-deployment-task.yaml
 oc create -f k8s/pipeline.yaml
 oc create -f k8s/triggertemplate.yaml
 oc create -f k8s/triggerbinding.yaml
@@ -287,12 +288,13 @@ cd pipelines-vote-ui
 
 Change the GitOps repo to your fork:
 ```bash
+sed -i 's/bluesman/yourquayuser/g' k8s/pipeline.yaml
 sed -i 's/blues-man/yourgithubuser/g' k8s/pipeline.yaml
 ```
 
 ```bash
 oc create -f k8s/vote-ui-pvc.yaml
-oc apply  -f k8s/git-update-deployment-task.yaml.yaml
+oc apply  -f k8s/git-update-deployment-task.yaml
 oc create -f k8s/pipeline.yaml
 oc create -f k8s/triggertemplate.yaml
 oc create -f k8s/triggerbinding.yaml
