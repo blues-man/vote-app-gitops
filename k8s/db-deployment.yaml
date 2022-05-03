@@ -1,0 +1,58 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    description: Defines how to deploy the database server
+  labels:
+    app: mssql2019
+    app.kubernetes.io/component: mssql2019
+    app.kubernetes.io/instance: mssql2019
+  name: mssql
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: mssql
+  template:
+    metadata:
+      labels:
+        name: mssql
+      name: mssql
+    spec:
+      containers:
+      - env:
+        - name: ACCEPT_EULA
+          value: "Y"
+        - name: MSSQL_PID
+          value: Developer
+        - name: SA_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: SA_PASSWORD
+              name: mssql-secret
+        - name: MSSQL_SERVICE
+          valueFrom:
+            secretKeyRef:
+              key: SERVICE_NAME
+              name: mssql-secret
+        image: mcr.microsoft.com/mssql/rhel/server:2019-latest
+        imagePullPolicy: IfNotPresent
+        name: db
+        ports:
+        - containerPort: 1433
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+#        volumeMounts:
+#        - mountPath: /var/opt/mssql
+#          name: mssql-data
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+#      volumes:
+#      - name: mssql-data
+#        persistentVolumeClaim:
+#          claimName: mssql-pvc
