@@ -6,6 +6,6 @@ images:
 - digest: sha256:6a68a8fe5a264e50ccf1b7b42be6883213e585b55549a718c59309454344bf82
   name: quay.io/burrsutter/vote-api
   newName: quay.io/burrsutter/vote-api
-- digest: sha256:93c4a84e0435addb2723285274a8e518cc4d54c52fef263174b3f0b7fbf831b2
+- digest: sha256:a84ed7f79e9921f087951d2ddca12fc11470a4093218149b32931c577a3f4d43
   name: quay.io/burrsutter/vote-ui
   newName: quay.io/burrsutter/vote-ui
