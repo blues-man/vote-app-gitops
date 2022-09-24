@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
 - ../../k8s/
 images:
-- digest: sha256:e3409a439b3e5ae1ae9b8657cda71aaafcfb03af1564e588a3661255076639ab
+- digest: sha256:796616070e94254f4585106a31edba5280c3c5e41c0718b8beb59181fd6c344a
   name: quay.io/burrsutter/vote-api
   newName: quay.io/burrsutter/vote-api
 - digest: sha256:a0a67ebca6aba10250bdcfe618905b9b10fc7e767b8c153fd18d3601bcd71c3f
