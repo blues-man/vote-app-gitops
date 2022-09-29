@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   annotations:
-    app.openshift.io/vcs-uri: 'https://github.com/blues-man/pipelines-vote-api.git'
+    app.openshift.io/vcs-uri: 'https://github.com/burrsutter/pipelines-vote-api.git'
     app.openshift.io/vcs-ref: 'master'
   labels:
     app: vote-api
@@ -25,7 +25,7 @@ spec:
         app: vote-api
     spec:
       containers:
-      - image: quay.io/bluesman/vote-api:latest
+      - image: quay.io/burrsutter/vote-api:latest
         imagePullPolicy: Always
         name: vote-api
         ports:

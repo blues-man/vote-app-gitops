@@ -3,9 +3,9 @@ kind: Kustomization
 resources:
 - ../../k8s/
 images:
-- digest: sha256:9857da4ee34dc1378bef9a8730dc8e34ada76f30fb3ab58925ab02fc15f3b73f
-  name: quay.io/bluesman/vote-api
-  newName: quay.io/bluesman/vote-api
-- digest: sha256:b9d003667507f1d8c196575fb7fe8e333380cf6a0e71ff6cd04802389901d44f
-  name: quay.io/bluesman/vote-ui
-  newName: quay.io/bluesman/vote-ui
+- digest: sha256:ea43d6ce8af5f5f28b982120caa25b213bf2146e6c4603dfcb220acb5be9b4d5
+  name: quay.io/burrsutter/vote-api
+  newName: quay.io/burrsutter/vote-api
+- digest: sha256:6b80e7a13c8938108fb10d9e2f304121f3dd0e836a4a248cc1c9d5aa63d98917
+  name: quay.io/burrsutter/vote-ui
+  newName: quay.io/burrsutter/vote-ui
