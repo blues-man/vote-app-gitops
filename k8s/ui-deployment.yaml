@@ -9,7 +9,7 @@ metadata:
     app.kubernetes.io/name: python
   name: vote-ui
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: vote-ui
