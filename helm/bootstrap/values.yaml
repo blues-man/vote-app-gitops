@@ -1,0 +1,22 @@
+# Default values for bootstrap.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+user:
+  count: 2
+  prefix: user
+
+argocd:
+  git:
+    url: http://unknown:3000
+    repo: myapp
+    revision: main
+    path: helm/argocd
+  values:
+    namespacePrefix: argocd-
+    repos:
+      - type: git
+        name: app1
+        url: http://repo/{{ user }}/app1
+        username: '{{ user }}'
+        password: password
