@@ -14,9 +14,9 @@ argocd:
     path: helm/argocd
   values:
     namespacePrefix: argocd-
-    repos:
-      - type: git
-        name: app1
-        url: http://repo/{{ user }}/app1
-        username: '{{ user }}'
-        password: password
+    # repos:
+    #   - type: git
+    #     name: app1
+    #     url: http://repo/{{ user }}/app1
+    #     username: '{{ user }}'
+    #     password: password

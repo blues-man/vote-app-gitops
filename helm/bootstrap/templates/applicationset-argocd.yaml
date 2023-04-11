@@ -28,8 +28,8 @@ spec:
             namespacePermissions:
               user: '{{- "{{" }} user {{- " }}" }}'
               role: edit
-            repos:
 {{- range $repo := .Values.argocd.values.repos }}
+            repos:
               - type: {{ $repo.type }}
                 name: {{ $repo.name }}
                 url: {{ $repo.url }}
