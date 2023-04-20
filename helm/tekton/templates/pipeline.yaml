@@ -1,0 +1,35 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: vote-app-pipeline
+  namespace: {{ .Values.tektonNamespace }}
+spec:
+  params:
+  - name: SOURCE_GIT_URL
+    type: string
+    description: The application git repository url
+    default: {{ .Values.app.repo.source.url }}
+  - name: SOURCE_GIT_REVISION
+    type: string
+    default: {{ .Values.app.repo.source.revision }}
+    description: The application git repository revision
+
+  workspaces:
+  - name: app-source
+
+  tasks:
+  - name: git-clone
+    taskRef:
+      kind: ClusterTask
+      name: git-clone
+    params:
+    - name: url
+      value: $(params.SOURCE_GIT_URL)
+    - name: revision
+      value: $(params.SOURCE_GIT_REVISION)
+    - name: deleteExisting
+      value: 'true'
+    workspaces:
+    - name: output
+      workspace: app-source

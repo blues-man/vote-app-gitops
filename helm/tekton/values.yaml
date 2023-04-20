@@ -1,0 +1,17 @@
+# Default values for tekton.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tektonNamespace: tekton
+
+namespacePermissions:
+  user: user
+  role: edit
+
+app:
+  repo:
+    source:
+      url: http://unknown:3000/user/my-app
+      revision: main
+      user: user
+      password: password
