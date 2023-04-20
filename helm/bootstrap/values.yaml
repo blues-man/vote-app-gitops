@@ -17,8 +17,6 @@ argocd:
     # repos:
     #   - type: git
     #     name: app1
-    #     url: http://repo/{{ user }}/app1
-    #     username: '{{ user }}'
     #     password: password
 
 tekton:
@@ -34,5 +32,5 @@ tekton:
       repo:
         source:
           name: pipelines-vote-api
-          revision: main
+          revision: master
           password: password

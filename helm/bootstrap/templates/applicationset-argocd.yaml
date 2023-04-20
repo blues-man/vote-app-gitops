@@ -28,12 +28,12 @@ spec:
             namespacePermissions:
               user: '{{- "{{" }} user {{- " }}" }}'
               role: edit
-{{- range $repo := .Values.argocd.values.repos }}
             repos:
+{{- range $repo := .Values.argocd.values.repos }}
               - type: {{ $repo.type }}
                 name: {{ $repo.name }}
-                url: {{ $repo.url }}
-                username: '{{ $repo.username }}'
+                url: {{ $.Values.argocd.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ $repo.name }}
+                username: '{{- "{{" }} user {{- " }}" }}'
                 password: {{ $repo.password }}
 {{- end }}
       destination:
