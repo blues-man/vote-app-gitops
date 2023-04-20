@@ -9,6 +9,7 @@ namespacePermissions:
   role: edit
 
 app:
+  namespace: demo
   repo:
     source:
       url: http://unknown:3000/user/my-app
