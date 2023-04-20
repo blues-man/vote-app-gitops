@@ -20,3 +20,19 @@ argocd:
     #     url: http://repo/{{ user }}/app1
     #     username: '{{ user }}'
     #     password: password
+
+tekton:
+  git:
+    url: http://unknown:3000
+    repo: myapp
+    revision: main
+    path: helm/tekton
+  values:
+    namespacePrefix: tekton-
+    app:
+      namespacePrefix: vote-app-
+      repo:
+        source:
+          name: pipelines-vote-api
+          revision: main
+          password: password
