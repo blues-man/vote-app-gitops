@@ -49,3 +49,10 @@ usertool:
   labAdminPassword: password
   labUserPassword: password
   labAccessToken: password
+
+guides:
+  repoUrl: https://github.com/blues-man/vote-app-guides
+  repoRevision: main
+  repoPath: chart
+  namespace: guides
+  image: ghcr.io/blues-man/vote-app-guides:latest
