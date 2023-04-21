@@ -6,6 +6,9 @@ user:
   count: 2
   prefix: user
 
+agnosticd:
+  domain: apps.cluster-guid.sandbox.opentlc.com
+
 argocd:
   git:
     url: http://unknown:3000
@@ -34,3 +37,15 @@ tekton:
           name: pipelines-vote-api
           revision: master
           password: password
+
+usertool:
+  repoUrl: https://github.com/redhat-gpte-devopsautomation/user-distribution
+  repoRevision: v0.0.1
+  repoPath: chart
+  namespace: usertool
+  image: quay.io/openshiftlabs/username-distribution:1.4
+  redisImage: registry.redhat.io/rhel8/redis-6:1-118
+  labDuration: 1week
+  labAdminPassword: password
+  labUserPassword: password
+  labAccessToken: password
