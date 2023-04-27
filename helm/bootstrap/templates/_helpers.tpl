@@ -1,8 +1,9 @@
 {{- define "usertool.labExtraUrls" }}
 {{- $domain := .Values.agnosticd.domain }}
 {{- $consoleUrl := printf "https://console-openshift-console.%s;OpenShift Console" $domain }}
+{{- $gitea := printf "https://gitea.%s/%%USERNAME%%;Gitea" $domain }}
 {{- $argocdUrl := printf "https://argocd-server-argocd-%%USERNAME%%.%s;ArgoCD" $domain }}
-{{- $urls := list $consoleUrl $argocdUrl }}
+{{- $urls := list $consoleUrl $gitea $argocdUrl }}
 {{- join "," $urls }}
 {{- end }}
 
