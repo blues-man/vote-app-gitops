@@ -31,11 +31,11 @@ spec:
             app:
               namespace: '{{ .Values.tekton.values.app.namespacePrefix }}{{- "{{" }} user {{- " }}" }}'
               repo:
-                source:
-                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.source.name }}
-                  revision: {{ .Values.tekton.values.app.repo.source.revision }}
+                api:
+                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.api.name }}
+                  revision: {{ .Values.tekton.values.app.repo.api.revision }}
                   user: '{{- "{{" }} user {{- " }}" }}'
-                  password: {{ .Values.tekton.values.app.repo.source.password }}
+                  password: {{ .Values.tekton.values.app.repo.api.password }}
                 ui:
                   url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.ui.name }}
                   revision: {{ .Values.tekton.values.app.repo.ui.revision }}

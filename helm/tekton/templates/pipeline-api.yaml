@@ -9,10 +9,10 @@ spec:
   - name: SOURCE_GIT_URL
     type: string
     description: The application git repository url
-    default: {{ .Values.app.repo.source.url }}
+    default: {{ .Values.app.repo.api.url }}
   - name: SOURCE_GIT_REVISION
     type: string
-    default: {{ .Values.app.repo.source.revision }}
+    default: {{ .Values.app.repo.api.revision }}
     description: The application git repository revision
   - default: image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespace }}/vote-api
     name: IMAGE_NAME

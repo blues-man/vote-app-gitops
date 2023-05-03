@@ -33,7 +33,7 @@ tekton:
     app:
       namespacePrefix: vote-app-dev-
       repo:
-        source:
+        api:
           name: pipelines-vote-api
           revision: master
           password: password

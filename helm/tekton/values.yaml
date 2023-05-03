@@ -11,7 +11,7 @@ namespacePermissions:
 app:
   namespace: demo
   repo:
-    source:
+    api:
       url: http://unknown:3000/user/my-app
       revision: main
       user: user
