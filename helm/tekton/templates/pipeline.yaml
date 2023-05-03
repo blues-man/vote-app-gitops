@@ -20,6 +20,12 @@ spec:
   - default: .
     name: PATH_CONTEXT
     type: string
+  - default: {{ .Values.app.repo.gitops.url }}
+    name: CONFIG_GIT_REPO
+    type: string
+  - default: {{ .Values.app.repo.gitops.revision }}
+    name: CONFIG_GIT_REVISION
+    type: string
 
   workspaces:
   - name: app-source
@@ -55,5 +61,28 @@ spec:
       kind: ClusterTask
       name: buildah
     workspaces:
-    - name: output
+    - name: source
+      workspace: app-source
+
+  - name: git-update-deployment
+    params:
+    - name: GIT_REPOSITORY
+      value: $(params.CONFIG_GIT_REPO)
+    - name: CURRENT_IMAGE
+      value: $(params.IMAGE_NAME)
+    - name: NEW_IMAGE
+      value: $(params.IMAGE_NAME)
+    - name: NEW_DIGEST
+      value: $(tasks.build-and-push.results.IMAGE_DIGEST)
+    - name: KUSTOMIZATION_PATH
+      value: environments/dev
+    - name: GIT_REF
+      value: $(params.CONFIG_GIT_REVISION)
+    runAfter:
+      - build-and-push
+    taskRef:
+      kind: Task
+      name: git-update-deployment
+    workspaces:
+    - name: workspace
       workspace: app-source

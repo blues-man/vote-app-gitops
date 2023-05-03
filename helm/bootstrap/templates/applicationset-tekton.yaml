@@ -36,6 +36,11 @@ spec:
                   revision: {{ .Values.tekton.values.app.repo.source.revision }}
                   user: '{{- "{{" }} user {{- " }}" }}'
                   password: {{ .Values.tekton.values.app.repo.source.password }}
+                gitops:
+                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.gitops.name }}
+                  revision: {{ .Values.tekton.values.app.repo.gitops.revision }}
+                  user: '{{- "{{" }} user {{- " }}" }}'
+                  password: {{ .Values.tekton.values.app.repo.gitops.password }}
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:

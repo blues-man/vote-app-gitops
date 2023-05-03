@@ -16,3 +16,8 @@ app:
       revision: main
       user: user
       password: password
+    gitops:
+      url: http://unknown:3000/user/my-app
+      revision: main
+      user: user
+      password: password
