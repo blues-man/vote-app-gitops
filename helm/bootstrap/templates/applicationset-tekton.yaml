@@ -14,7 +14,7 @@ spec:
 {{- end }}
   template:
     metadata:
-      name: tekton-{{- "{{" }} user {{- " }}" }}
+      name: vote-app-ci-{{- "{{" }} user {{- " }}" }}
       namespace: openshift-gitops
     spec:
       project: default
