@@ -12,7 +12,7 @@ agnosticd:
 argocd:
   git:
     url: http://unknown:3000
-    repo: myapp
+    repo: vote-app-gitops
     revision: main
     path: helm/argocd
   values:
@@ -25,7 +25,7 @@ argocd:
 tekton:
   git:
     url: http://unknown:3000
-    repo: myapp
+    repo: vote-app-gitops
     revision: main
     path: helm/tekton
   values:
