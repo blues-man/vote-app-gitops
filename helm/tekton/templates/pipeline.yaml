@@ -14,7 +14,7 @@ spec:
     type: string
     default: {{ .Values.app.repo.source.revision }}
     description: The application git repository revision
-  - default: image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespace }}/vote-api:latest
+  - default: image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespace }}/vote-api
     name: IMAGE_NAME
     type: string
   - default: .
