@@ -37,6 +37,10 @@ tekton:
           name: pipelines-vote-api
           revision: master
           password: password
+        ui:
+          name: pipelines-vote-ui
+          revision: master
+          password: password
         gitops:
           name: vote-app-gitops
           revision: main

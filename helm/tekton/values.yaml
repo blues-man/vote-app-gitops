@@ -16,6 +16,11 @@ app:
       revision: main
       user: user
       password: password
+    ui:
+      url: http://unknown:3000/user/my-app-ui
+      revision: main
+      user: user
+      password: password
     gitops:
       url: http://unknown:3000/user/my-app
       revision: main
