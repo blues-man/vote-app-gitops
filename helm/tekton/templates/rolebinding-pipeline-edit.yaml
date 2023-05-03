@@ -1,14 +1,14 @@
 ---
-# apiVersion: rbac.authorization.k8s.io/v1
-# kind: RoleBinding
-# metadata:
-#   name: {{ .Values.tektonNamespace }}-pipeline-edit
-#   namespace: {{ .Values.app.namespace }}
-# roleRef:
-#   apiGroup: rbac.authorization.k8s.io
-#   kind: ClusterRole
-#   name: edit
-# subjects:
-# - kind: ServiceAccount
-#   name: pipeline
-#   namespace: {{ .Values.tektonNamespace }}
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: {{ .Values.tektonNamespace }}-pipeline-edit
+  namespace: {{ .Values.app.namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: edit
+subjects:
+- kind: ServiceAccount
+  name: pipeline
+  namespace: {{ .Values.tektonNamespace }}

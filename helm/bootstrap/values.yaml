@@ -29,9 +29,9 @@ tekton:
     revision: main
     path: helm/tekton
   values:
-    namespacePrefix: tekton-
+    namespacePrefix: vote-app-ci-
     app:
-      namespacePrefix: vote-app-
+      namespacePrefix: vote-app-dev-
       repo:
         source:
           name: pipelines-vote-api

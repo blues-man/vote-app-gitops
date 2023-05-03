@@ -14,11 +14,18 @@ spec:
     type: string
     default: {{ .Values.app.repo.source.revision }}
     description: The application git repository revision
+  - default: image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespace }}/vote-api:latest
+    name: IMAGE_NAME
+    type: string
+  - default: .
+    name: PATH_CONTEXT
+    type: string
 
   workspaces:
   - name: app-source
 
   tasks:
+
   - name: git-clone
     taskRef:
       kind: ClusterTask
@@ -30,6 +37,23 @@ spec:
       value: $(params.SOURCE_GIT_REVISION)
     - name: deleteExisting
       value: 'true'
+    workspaces:
+    - name: output
+      workspace: app-source
+
+  - name: build-and-push
+    params:
+    - name: IMAGE
+      value: $(params.IMAGE_NAME)
+    - name: TLSVERIFY
+      value: "false"
+    - name: CONTEXT
+      value: $(params.PATH_CONTEXT)
+    runAfter:
+    - git-clone
+    taskRef:
+      kind: ClusterTask
+      name: buildah
     workspaces:
     - name: output
       workspace: app-source
