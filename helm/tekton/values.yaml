@@ -4,12 +4,15 @@
 
 tektonNamespace: tekton
 
+argocdNamespace: argocd
+
 namespacePermissions:
   user: user
   role: edit
 
 app:
-  namespace: demo
+  namespaceDev: dev
+  namespaceProd: prod
   repo:
     api:
       url: http://unknown:3000/user/my-app

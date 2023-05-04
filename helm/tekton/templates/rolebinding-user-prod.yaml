@@ -3,7 +3,7 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: dev-{{ .Values.namespacePermissions.user }}
-  namespace: {{ .Values.app.namespaceDev }}
+  namespace: {{ .Values.app.namespaceProd }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

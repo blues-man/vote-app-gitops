@@ -31,7 +31,8 @@ tekton:
   values:
     namespacePrefix: vote-app-ci-
     app:
-      namespacePrefix: vote-app-dev-
+      namespacePrefixDev: vote-app-dev-
+      namespacePrefixProd: vote-app-prod-
       repo:
         api:
           name: pipelines-vote-api
