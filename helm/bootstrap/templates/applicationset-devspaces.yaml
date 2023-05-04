@@ -24,8 +24,8 @@ spec:
         path: {{ .Values.devspaces.git.path }}
         helm:
           values: |
-            namespace:  {{- "{{" }} user {{- " }}" }}{{ .Values.devspaces.values.namespacePostfix }}
-            user:  {{- "{{" }} user {{- " }}" }}
+            namespace: '{{- "{{" }} user {{- " }}" }}{{ .Values.devspaces.values.namespacePostfix }}'
+            user: '{{- "{{" }} user {{- " }}" }}'
             argocdNamespace: {{ .Values.argocd.values.namespacePrefix }}{{- "{{" }} user {{- " }}" }}
             namespacePermissions:
               user: '{{- "{{" }} user {{- " }}" }}'
