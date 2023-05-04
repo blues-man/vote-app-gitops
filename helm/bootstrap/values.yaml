@@ -47,6 +47,15 @@ tekton:
           revision: main
           password: password
 
+devspaces:
+  git:
+    url: http://unknown:3000
+    repo: vote-app-gitops
+    revision: main
+    path: helm/tekton
+  values:
+    namespacePostfix: -devspaces
+
 usertool:
   repoUrl: https://github.com/redhat-gpte-devopsautomation/user-distribution
   repoRevision: v0.0.1
