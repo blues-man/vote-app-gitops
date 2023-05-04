@@ -24,5 +24,5 @@ spec:
       workspaces:
       - name: app-source
         persistentVolumeClaim:
-          claimName: workspace-app-source
+          claimName: workspace-ui-app-source
 
