@@ -2,7 +2,7 @@
 apiVersion: triggers.tekton.dev/v1alpha1
 kind: TriggerTemplate
 metadata:
-  name: vote-app-pipeline
+  name: vote-app-api-pipeline
   namespace: {{ .Values.tektonNamespace }}
 spec:
   params:
@@ -12,7 +12,7 @@ spec:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      generateName: vote-app-pipeline-
+      generateName: vote-app-api-pipeline-
     spec:
       params:
       - name: SOURCE_GIT_URL
@@ -20,10 +20,9 @@ spec:
       - name: SOURCE_GIT_REVISION
         value: $(tt.params.git-revision)
       pipelineRef:
-        name: vote-app-pipeline
+        name: vote-app-api-pipeline
       workspaces:
       - name: app-source
         persistentVolumeClaim:
           claimName: workspace-app-source
-      - name: maven-settings
-        emptyDir: {}
+
