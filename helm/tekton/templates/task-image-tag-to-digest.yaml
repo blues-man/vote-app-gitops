@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
   name: image-tag-to-digest
+  namespace: {{ .Values.tektonNamespace }}
 spec:
   params:
     - name: image_dest_url
