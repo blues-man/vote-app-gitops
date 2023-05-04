@@ -7,9 +7,9 @@ metadata:
     openshift.io/description: "Devspaces Namespace"
     openshift.io/display-name: "Devspaces Namespace"
     che.eclipse.org/username: {{ .Values.user }}
+    openshift.io/requester: 'system:serviceaccount:openshift-operators:che'
   labels:
     argocd.argoproj.io/managed-by: {{ .Values.argocdNamespace }}
     app.kubernetes.io/component: workspaces-namespace
     app.kubernetes.io/part-of: che.eclipse.org
     kubernetes.io/metadata.name: {{ .Values.namespace }}
-    openshift.io/requester: 'system:serviceaccount:openshift-operators:che'
