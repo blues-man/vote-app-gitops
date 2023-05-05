@@ -12,6 +12,8 @@ namespacePermissions:
 
 user: user
 
+subdomain: subdomain.tld
+
 app:
   namespaceDev: dev
   namespaceProd: prod
