@@ -8,7 +8,7 @@ spec:
     - default: {{ .Values.app.namespaceDev }}/vote-ui:latest
       name: SOURCE_IMAGE
       type: string
-    - default: {{ .Values.app.namespaceDev }}/vote-ui:prod
+    - default: {{ .Values.app.namespaceProd }}/vote-ui:prod
       name: DEST_IMAGE
       type: string
     - default: {{ .Values.app.repo.gitops.url }}
