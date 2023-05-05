@@ -31,6 +31,13 @@ spec:
             namespacePermissions:
               user: '{{- "{{" }} user {{- " }}" }}'
               role: edit
+            app:
+              repo:
+                ui:
+                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.ui.name }}
+                  revision: {{ .Values.tekton.values.app.repo.ui.revision }}
+                  user: '{{- "{{" }} user {{- " }}" }}'
+                  password: {{ .Values.tekton.values.app.repo.ui.password }}
       destination:
         server: https://kubernetes.default.svc
       syncPolicy:
