@@ -55,6 +55,12 @@ devspaces:
     path: helm/tekton
   values:
     namespacePostfix: -devspaces
+    app:
+      repo:
+        ui:
+          name: pipelines-vote-ui
+          revision: master
+          password: password
 
 usertool:
   repoUrl: https://github.com/redhat-gpte-devopsautomation/user-distribution
