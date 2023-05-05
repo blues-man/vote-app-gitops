@@ -18,12 +18,8 @@ spec:
       name: CONFIG_GIT_REVISION
       type: string
     - default: >-
-        image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespaceDev }}/vote-ui
-      name: IMAGE_NAME
-      type: string
-    - default: >-
         image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespaceProd }}/vote-ui
-      name: IMAGE_NAME_DST
+      name: IMAGE_NAME
       type: string
   tasks:
     - name: tag-to-prod
@@ -38,7 +34,7 @@ spec:
     - name: image-tag-to-digest
       params:
         - name: image_dest_url
-          value: $(params.IMAGE_NAME_DST)
+          value: $(params.IMAGE_NAME)
         - name: image_dest_tag
           value: prod
       runAfter:
@@ -53,7 +49,7 @@ spec:
         - name: GIT_REF
           value: $(params.CONFIG_GIT_REVISION)
         - name: CURRENT_IMAGE
-          value: $(params.IMAGE_NAME)
+          value: quay.io/bluesman/vote-ui:latest
         - name: NEW_IMAGE
           value: $(params.IMAGE_NAME)
         - name: NEW_DIGEST
