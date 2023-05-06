@@ -1,158 +1,45 @@
 apiVersion: workspace.devfile.io/v1alpha2
 kind: DevWorkspace
 metadata:
-  annotations:
-    che.eclipse.org/devfile-source: |
-      url:
-        location: '{{ .Values.app.repo.ui.url }}/tree/master'
-      factory:
-        params: >-
-          policies.create=peruser&url={{ .Values.app.repo.ui.url }}/tree/master
   name: vote-ui
   namespace: {{ .Values.namespace }}
-  finalizers:
-    - storage.controller.devfile.io
-    - rbac.controller.devfile.io
 spec:
-  contributions:
   routingClass: che
   started: true
+  contributions:
+    - name: editor
+      kubernetes:
+        name: vscode
   template:
-    attributes:
-      .che/che-theia-plugins.yaml: |
-        - id: ms-python/python/latest
-          override:
-            sidecar: {}
-            preferences:
-              python.globalModuleInstallation: true
-      .vscode/extensions.json: |-
-        {
-          "recommendations": [
-            "ms-python/python"
-          ]
-        }
-      .vscode/launch.json: |-
-        {
-          "version": "0.2.0",
-          "configurations": [
-            {
-              "name": "Python: Current File",
-              "type": "python",
-              "request": "launch",
-              "program": "${file}",
-              "console": "internalConsole"
-            }
-          ]
-        }
-      controller.devfile.io/devworkspace-config:
-        name: devworkspace-config
-        namespace: openshift-operators
-      controller.devfile.io/storage-type: per-user
-      dw.metadata.annotations:
-        che.eclipse.org/devfile-source: |
-          url:
-            location: '{{ .Values.app.repo.ui.url }}/tree/master'
-          factory:
-            params: >-
-              policies.create=peruser&url={{ .Values.app.repo.ui.url }}/tree/master
-    commands:
-      - exec:
-          commandLine: python app.py
-          component: python
-          label: Run Python App
-          workingDir: '${PROJECTS_ROOT}/vote-ui-python'
-        id: run-python-app
-      - exec:
-          commandLine: pip install --user -r requirements.txt
-          component: python
-          label: Install dependencies
-          workingDir: '${PROJECTS_ROOT}/vote-ui-python'
-        id: install-dependencies
     components:
-      - attributes:
-          che-code.eclipse.org/contribute-endpoint/code-redirect-1: 13131
-          che-code.eclipse.org/contribute-memoryLimit: true
-          che-code.eclipse.org/contribute-endpoint/code-redirect-2: 13132
-          che-code.eclipse.org/contribute-cpuRequest: true
-          che-code.eclipse.org/contribute-endpoint/code-redirect-3: 13133
-          che-code.eclipse.org/original-memoryLimit: 512Mi
-          che-code.eclipse.org/contributed-container: python
-          che-code.eclipse.org/contribute-cpuLimit: true
-          che-code.eclipse.org/contribute-memoryRequest: true
-          che-code.eclipse.org/contribute-endpoint/che-code: 3100
-          che-code.eclipse.org/contribute-entry-point: true
-          che-code.eclipse.org/contribute-volume-mount/checode: /checode
+      - name: python
         container:
-          cpuRequest: 30m
-          command:
-            - /checode/entrypoint-volume.sh
+          image: quay.io/devfile/universal-developer-image:ubi8-latest
           env:
             - name: VOTING_API_SERVICE_HOST
               value: vote-api
             - name: VOTING_API_SERVICE_PORT
               value: '9000'
-            - name: CHE_DASHBOARD_URL
-              value: 'https://devspaces.{{ .Values.subdomain }}'
-            - name: CHE_PLUGIN_REGISTRY_URL
-              value: >-
-                https://devspaces.{{ .Values.subdomain }}/plugin-registry/v3
-            - name: CHE_PLUGIN_REGISTRY_INTERNAL_URL
-              value: 'http://plugin-registry.openshift-operators.svc:8080/v3'
-            - name: OPENVSX_REGISTRY_URL
-              value: 'https://open-vsx.org'
-          memoryRequest: 256Mi
-          sourceMapping: /projects
-          cpuLimit: 500m
-          volumeMounts:
-            - name: checode
-              path: /checode
-          memoryLimit: 1.61G
-          image: >-
-            registry.redhat.io/codeready-workspaces/plugin-java8-rhel8@sha256:ecaa9ddef5ca8db9552f1b5e66f7aacb19d72e488d718d8135b1e1d9f66a1a7a
+          cpuRequest: '30m'
+          memoryRequest: '256Mi'
+          cpuLimit: '1'
+          memoryLimit: '2Gi'
           endpoints:
-            - attributes:
-                contributed-by: che-code.eclipse.org
-                cookiesAuthEnabled: true
-                discoverable: false
-                type: main
-                urlRewriteSupported: true
-              exposure: public
-              name: che-code
-              protocol: https
-              secure: false
-              targetPort: 3100
-            - attributes:
-                contributed-by: che-code.eclipse.org
-                discoverable: false
-                urlRewriteSupported: false
-              exposure: public
-              name: code-redirect-1
-              protocol: http
-              targetPort: 13131
-            - attributes:
-                contributed-by: che-code.eclipse.org
-                discoverable: false
-                urlRewriteSupported: false
-              exposure: public
-              name: code-redirect-2
-              protocol: http
-              targetPort: 13132
-            - attributes:
-                contributed-by: che-code.eclipse.org
-                discoverable: false
-                urlRewriteSupported: false
-              exposure: public
-              name: code-redirect-3
-              protocol: http
-              targetPort: 13133
-          mountSources: true
-        name: python
+            - name: vote-ui
+              targetPort: 8080
+    commands:
+      - id: run-python-app
+        exec:
+          label: Run Python App
+          component: python
+          commandLine: python app.py
+      - id: install-dependencies
+        exec:
+          label: Install Dependencies
+          component: python
+          commandLine: pip install --user -r requirements.txt
     projects:
-      - attributes:
-          source-origin: branch
+      - name: vote-ui-python
         git:
-          checkoutFrom:
-            revision: master
           remotes:
             origin: '{{ .Values.app.repo.ui.url }}.git'
-        name: vote-ui-python
