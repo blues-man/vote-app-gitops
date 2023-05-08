@@ -17,7 +17,7 @@ spec:
           image: quay.io/devfile/universal-developer-image:ubi8-latest
           env:
             - name: VOTING_API_SERVICE_HOST
-              value: vote-api
+              value: vote-api.vote-app-dev-{{ .Values.user }}.svc.cluster.local
             - name: VOTING_API_SERVICE_PORT
               value: '9000'
           cpuRequest: '30m'
