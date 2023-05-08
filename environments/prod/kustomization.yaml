@@ -19,7 +19,6 @@ patchesJson6902:
       value:
         argocd.argoproj.io/sync-wave: "1"
   target:
-    group: apps
     kind: Service
     name: vote-api
     version: v1
@@ -39,7 +38,6 @@ patchesJson6902:
       value:
         argocd.argoproj.io/sync-wave: "3"
   target:
-    group: apps
     kind: Service
     name: vote-ui
     version: v1
@@ -49,7 +47,6 @@ patchesJson6902:
       value:
         argocd.argoproj.io/sync-wave: "4"
   target:
-    group: apps
     kind: Route
     name: vote-ui
     version: v1
