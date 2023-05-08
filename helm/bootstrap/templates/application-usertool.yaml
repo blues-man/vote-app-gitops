@@ -22,7 +22,8 @@ spec:
         labUserCount: "{{ .Values.user.count }}"
         labUserPassword: {{ .Values.usertool.labUserPassword }}
         labUserPrefix: {{ .Values.user.prefix }}
-        labExtraUrls: {{ include "usertool.labExtraUrls" . }}
+        labExtraUrls: |-
+          {{ include "usertool.labExtraUrls" . }}
         labModuleUrls: |-
           {{ include "usertool.labModuleUrls" . }}
   destination:
