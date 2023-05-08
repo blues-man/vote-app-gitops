@@ -23,7 +23,7 @@ spec:
         labUserPassword: {{ .Values.usertool.labUserPassword }}
         labUserPrefix: {{ .Values.user.prefix }}
         labExtraUrls: {{ include "usertool.labExtraUrls" . }}
-        labModuleUrls: "{{ include "usertool.labModuleUrls" . }}"
+        labModuleUrls: '{{ include "usertool.labModuleUrls" . }}'
   destination:
     namespace: {{ .Values.usertool.namespace }}
     server: https://kubernetes.default.svc
