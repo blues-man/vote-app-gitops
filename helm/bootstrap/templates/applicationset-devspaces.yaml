@@ -31,10 +31,12 @@ spec:
             namespacePermissions:
               user: '{{- "{{" }} user {{- " }}" }}'
               role: edit
+            git:
+              url: {{ .Values.devspaces.git.url }}
             app:
               repo:
                 ui:
-                  url: {{ .Values.devspaces.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.ui.name }}
+                  url: {{ .Values.devspaces.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.devspaces.values.app.repo.ui.name }}
                   revision: {{ .Values.devspaces.values.app.repo.ui.revision }}
                   user: '{{- "{{" }} user {{- " }}" }}'
                   password: {{ .Values.devspaces.values.app.repo.ui.password }}
