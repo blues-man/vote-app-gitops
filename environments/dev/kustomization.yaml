@@ -9,3 +9,8 @@ patchesJson6902:
       value:
         app.openshift.io/vcs-uri: 'https://github.com/blues-man/pipelines-vote-ui.git'
         app.openshift.io/vcs-ref: 'master'
+  target:
+    group: apps
+    kind: Deployment
+    name: vote-ui
+    version: v1
