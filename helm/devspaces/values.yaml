@@ -14,6 +14,8 @@ user: user
 
 subdomain: subdomain.tld
 
+git:
+  url: http://unknown:3000
 app:
   repo:
     ui:
