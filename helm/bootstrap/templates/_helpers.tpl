@@ -11,8 +11,9 @@
 {{- $domain := .Values.agnosticd.domain }}
 {{- $params := printf "?USERID=%%USERNAME%%&SUBDOMAIN=%s" $domain }}
 {{- $module1 := printf "https://guides-guides.%s/vote-app-guides/main/m1/intro.html%s;Module 1 Overview" $domain $params }}
-{{- $module2 := printf "https://guides-guides.%s/vote-app-guides/main/m2/intro.html%s;Module 2 Demo" $domain $params }}
-{{- $module3 := printf "https://guides-guides.%s/vote-app-guides/main/m3/intro.html%s;Module 3 Conclusion" $domain $params }}
+{{- $module2 := printf "https://guides-guides.%s/vote-app-guides/main/m2/intro.html%s;Module 2 Development" $domain $params }}
+{{- $module3 := printf "https://guides-guides.%s/vote-app-guides/main/m3/intro.html%s;Module 3 Production" $domain $params }}
+{{- $module3 := printf "https://guides-guides.%s/vote-app-guides/main/m3/intro.html%s;Module 4 Conclusion" $domain $params }}
 {{- $urls := list $module1 $module2 $module3 }}
 {{- join "," $urls }}
 {{- end }}
