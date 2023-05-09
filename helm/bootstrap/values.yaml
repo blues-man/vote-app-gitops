@@ -52,7 +52,7 @@ devspaces:
     url: http://unknown:3000
     repo: vote-app-gitops
     revision: main
-    path: helm/tekton
+    path: helm/devspaces
   values:
     namespacePostfix: -devspaces
     app:
