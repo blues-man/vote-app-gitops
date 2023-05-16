@@ -32,7 +32,7 @@ spec:
               user: '{{- "{{" }} user {{- " }}" }}'
               role: edit
             git:
-              url: {{ .Values.devspaces.git.url }}
+              url: {{ .Values.devspaces.git.url | replace "http://" "" }}
             app:
               repo:
                 ui:
