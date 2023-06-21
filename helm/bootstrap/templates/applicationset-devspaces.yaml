@@ -27,7 +27,7 @@ spec:
             namespace: '{{- "{{" }} user {{- " }}" }}{{ .Values.devspaces.values.namespacePostfix }}'
             user: '{{- "{{" }} user {{- " }}" }}'
             argocdNamespace: {{ .Values.argocd.values.namespacePrefix }}{{- "{{" }} user {{- " }}" }}
-            subdomain: {{ .Values.agnosticd.domain }}
+            subdomain: {{ .Values.deployer.domain }}
             namespacePermissions:
               user: '{{- "{{" }} user {{- " }}" }}'
               role: edit

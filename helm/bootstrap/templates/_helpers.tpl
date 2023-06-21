@@ -1,5 +1,5 @@
 {{- define "usertool.labExtraUrls" }}
-{{- $domain := .Values.agnosticd.domain }}
+{{- $domain := .Values.deployer.domain }}
 {{- $consoleUrl := printf "https://console-openshift-console.%s;OpenShift Console" $domain }}
 {{- $gitea := printf "https://gitea.%s/%%USERNAME%%;Gitea" $domain }}
 {{- $argocdUrl := printf "https://argocd-server-argocd-%%USERNAME%%.%s;ArgoCD" $domain }}
@@ -8,7 +8,7 @@
 {{- end }}
 
 {{- define "usertool.labModuleUrls" }}
-{{- $domain := .Values.agnosticd.domain }}
+{{- $domain := .Values.deployer.domain }}
 {{- $params := printf "?USERID=%%USERNAME%%&SUBDOMAIN=%s" $domain }}
 {{- $module1 := printf "https://guides-guides.%s/vote-app-guides/main/m1/intro.html%s;Module 1 Overview" $domain $params }}
 {{- $module2 := printf "https://guides-guides.%s/vote-app-guides/main/m2/intro.html%s;Module 2 Development" $domain $params }}
