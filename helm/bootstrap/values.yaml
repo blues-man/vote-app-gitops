@@ -6,7 +6,7 @@ user:
   count: 2
   prefix: user
 
-agnosticd:
+deployer:
   domain: apps.cluster-guid.sandbox.opentlc.com
 
 argocd:
