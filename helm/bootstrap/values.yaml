@@ -9,6 +9,8 @@ user:
 deployer:
   domain: apps.cluster-guid.sandbox.opentlc.com
 
+infoNamespace: openshift-gitops
+
 argocd:
   git:
     url: http://unknown:3000
