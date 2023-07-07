@@ -5,7 +5,7 @@ bases:
 replicas:
 - name: vote-ui
   count: 1
-patchesJson6902:
+patches:
 - patch: |-
     - op: add
       path: /metadata/annotations
