@@ -1,0 +1,88 @@
+---
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: vote-app-api-pipeline
+  namespace: {{ .Values.tektonNamespace }}
+spec:
+  params:
+  - name: SOURCE_GIT_URL
+    type: string
+    description: The application git repository url
+    default: {{ .Values.app.repo.api.url }}
+  - name: SOURCE_GIT_REVISION
+    type: string
+    default: {{ .Values.app.repo.api.revision }}
+    description: The application git repository revision
+  - default: image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespaceDev }}/vote-api
+    name: IMAGE_NAME
+    type: string
+  - default: .
+    name: PATH_CONTEXT
+    type: string
+  - default: {{ .Values.app.repo.gitops.url }}
+    name: CONFIG_GIT_REPO
+    type: string
+  - default: {{ .Values.app.repo.gitops.revision }}
+    name: CONFIG_GIT_REVISION
+    type: string
+
+  workspaces:
+  - name: app-source
+
+  tasks:
+
+  - name: git-clone
+    taskRef:
+      kind: ClusterTask
+      name: git-clone
+    params:
+    - name: url
+      value: $(params.SOURCE_GIT_URL)
+    - name: revision
+      value: $(params.SOURCE_GIT_REVISION)
+    - name: deleteExisting
+      value: 'true'
+    workspaces:
+    - name: output
+      workspace: app-source
+
+  - name: build-and-push
+    params:
+    - name: IMAGE
+      value: $(params.IMAGE_NAME)
+    - name: TLSVERIFY
+      value: "false"
+    - name: CONTEXT
+      value: $(params.PATH_CONTEXT)
+    runAfter:
+    - git-clone
+    taskRef:
+      kind: ClusterTask
+      name: buildah
+    workspaces:
+    - name: source
+      workspace: app-source
+
+  - name: git-update-deployment
+    params:
+    - name: GIT_REPOSITORY
+      value: $(params.CONFIG_GIT_REPO)
+    - name: CURRENT_IMAGE
+      value: quay.io/bluesman/vote-api:latest
+    - name: NEW_IMAGE
+      value: $(params.IMAGE_NAME)
+    - name: NEW_DIGEST
+      value: $(tasks.build-and-push.results.IMAGE_DIGEST)
+    - name: KUSTOMIZATION_PATH
+      value: environments/dev
+    - name: GIT_REF
+      value: $(params.CONFIG_GIT_REVISION)
+    runAfter:
+      - build-and-push
+    taskRef:
+      kind: Task
+      name: git-update-deployment
+    workspaces:
+    - name: workspace
+      workspace: app-source

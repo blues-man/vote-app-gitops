@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: git-config
+  namespace: {{ .Values.namespace }}
+  annotations:
+    controller.devfile.io/mount-as: subpath
+    controller.devfile.io/mount-path: /etc/
+  labels:
+    controller.devfile.io/mount-to-devworkspace: "true"
+    controller.devfile.io/watch-configmap: "true"
+data:
+  gitconfig: |
+    [user]
+      email = {{ .Values.user }}@redhat.com
+      name = {{ .Values.user }}
+    [alias]
+      st = status
+      co = checkout
+      ci = commit

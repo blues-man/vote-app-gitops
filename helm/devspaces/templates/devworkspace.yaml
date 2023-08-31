@@ -1,0 +1,45 @@
+apiVersion: workspace.devfile.io/v1alpha2
+kind: DevWorkspace
+metadata:
+  name: vote-ui
+  namespace: {{ .Values.namespace }}
+spec:
+  routingClass: che
+  started: true
+  contributions:
+    - name: editor
+      kubernetes:
+        name: vscode
+  template:
+    components:
+      - name: python
+        container:
+          image: quay.io/devfile/universal-developer-image:ubi8-latest
+          env:
+            - name: VOTING_API_SERVICE_HOST
+              value: vote-api.vote-app-dev-{{ .Values.user }}.svc.cluster.local
+            - name: VOTING_API_SERVICE_PORT
+              value: '9000'
+          cpuRequest: '30m'
+          memoryRequest: '256Mi'
+          cpuLimit: '1'
+          memoryLimit: '2Gi'
+          endpoints:
+            - name: vote-ui
+              targetPort: 8080
+    commands:
+      - id: run-python-app
+        exec:
+          label: Run Python App
+          component: python
+          commandLine: python app.py
+      - id: install-dependencies
+        exec:
+          label: Install Dependencies
+          component: python
+          commandLine: pip install --user -r requirements.txt
+    projects:
+      - name: vote-ui-python
+        git:
+          remotes:
+            origin: '{{ .Values.app.repo.ui.url }}.git'

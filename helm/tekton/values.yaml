@@ -1,0 +1,31 @@
+# Default values for tekton.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+tektonNamespace: tekton
+
+argocdNamespace: argocd
+
+namespacePermissions:
+  user: user
+  role: edit
+
+app:
+  namespaceDev: dev
+  namespaceProd: prod
+  repo:
+    api:
+      url: http://unknown:3000/user/my-app
+      revision: main
+      user: user
+      password: password
+    ui:
+      url: http://unknown:3000/user/my-app-ui
+      revision: main
+      user: user
+      password: password
+    gitops:
+      url: http://unknown:3000/user/my-app
+      revision: main
+      user: user
+      password: password

@@ -1,0 +1,14 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: EventListener
+metadata:
+  name: eventlistener-ui
+  namespace: {{ .Values.tektonNamespace }}
+spec:
+  serviceAccountName: pipeline
+  triggers:
+  - name: gitea-vote-app-ui-pipeline
+    bindings:
+    - ref: gitea
+    template:
+      ref: vote-app-ui-pipeline

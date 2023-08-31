@@ -1,0 +1,84 @@
+# Default values for bootstrap.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+user:
+  count: 2
+  prefix: user
+
+deployer:
+  domain: apps.cluster-guid.sandbox.opentlc.com
+
+infoNamespace: openshift-gitops
+
+argocd:
+  git:
+    url: http://unknown:3000
+    repo: vote-app-gitops
+    revision: main
+    path: helm/argocd
+  values:
+    namespacePrefix: argocd-
+    # repos:
+    #   - type: git
+    #     name: app1
+    #     password: password
+
+tekton:
+  git:
+    url: http://unknown:3000
+    repo: vote-app-gitops
+    revision: main
+    path: helm/tekton
+  values:
+    namespacePrefix: vote-app-ci-
+    app:
+      namespacePrefixDev: vote-app-dev-
+      namespacePrefixProd: vote-app-prod-
+      repo:
+        api:
+          name: pipelines-vote-api
+          revision: master
+          password: password
+        ui:
+          name: pipelines-vote-ui
+          revision: master
+          password: password
+        gitops:
+          name: vote-app-gitops
+          revision: main
+          password: password
+
+devspaces:
+  git:
+    url: http://unknown:3000
+    repo: vote-app-gitops
+    revision: main
+    path: helm/devspaces
+  values:
+    namespacePostfix: -devspaces
+    app:
+      repo:
+        ui:
+          name: pipelines-vote-ui
+          revision: master
+          password: password
+
+usertool:
+  repoUrl: https://github.com/redhat-gpte-devopsautomation/user-distribution
+  repoRevision: v0.0.1
+  repoPath: chart
+  namespace: usertool
+  image: quay.io/openshiftlabs/username-distribution:1.4
+  redisImage: registry.redhat.io/rhel8/redis-6:1-118
+  labDuration: 1week
+  labAdminPassword: password
+  labUserPassword: password
+  labAccessToken: password
+
+guides:
+  repoUrl: https://github.com/redhat-scholars/inner-outer-guides
+  repoRevision: main
+  repoPath: chart
+  namespace: guides
+  image: ghcr.io/redhat-scholars/inner-outer-guides:latest

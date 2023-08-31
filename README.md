@@ -7,7 +7,7 @@ The aim of this demo is to show how to interconnect [Tekton](https://tekton.dev/
 The flow of this demo is:
 
 * Create and start manually or automatically [OpenShift Pipelines](https://www.openshift.com/learn/topics/ci-cd) to build container images
-* Edit code from [CodeReady Workspaces](https://developers.redhat.com/products/codeready-workspaces/overview)
+* Edit code from [OpenShift DevSpaces](https://developers.redhat.com/products/codeready-workspaces/overview)
 * Scan container images with [Quay.io](https://quay.io)
 * Sync application with [OpenShift GitOps](https://www.openshift.com/learn/topics/gitops/) in Dev and Prod environments
 
@@ -33,9 +33,9 @@ Vote App source repos (Frontend + Backend):
 This repo, used to store Kubernetes manifests and Argo application:
 * [Vote App GitOps](https://github.com/blues-man/vote-app-gitops)
 
-There are 2 branches:
-* **develop**: used to deploy and sync manifests in a **Dev** environment
-* **main**: used to deploy and sync manifests **Prod**, uses [Argo CD Sync Waves](https://argoproj.github.io/argo-cd/user-guide/sync-waves/) to order manifests sync.
+There are 2 environments managed with Kustomize:
+* **dev**: used to deploy and sync manifests in a **Dev** environment
+* **prod**: used to deploy and sync manifests **Prod**, uses [Argo CD Sync Waves](https://argoproj.github.io/argo-cd/user-guide/sync-waves/) to order manifests sync.
 
 #### Create a Personal Access Token for GitHub
 
@@ -160,15 +160,15 @@ Click on Argo CD from the OpenShift Web Console application launcher and then lo
 ![Argo CD](https://raw.githubusercontent.com/siamaksade/openshift-gitops-getting-started/1.1/images/gitops-06.png)
 
 
-#### Codeready Workspaces
+#### OpenShift DevSpaces
 
 CodeReady Workspace is an in-browser IDE  that will be used to edit and test the code from OpenShift with a pre-build Workspace from a Devfile.
 
 Log into OpenShift Web Console as a cluster admin and navigate to the **Administrator** perspective and then **Operators** &rarr; **OperatorHub**. 
 
-In the **OperatorHub**, search for *Codeready Workspaces* and follow the operator install flow to install it.
+In the **OperatorHub**, search for *OpenShift DevSpaces* and follow the operator install flow to install it.
 
-In the Red Hat CodeReady Workspaces pop-up window, click the **Install** button.
+In the Red Hat OpenShift DevSpaces pop-up window, click the **Install** button.
 
 ![CRW](images/codeready-installation.png)
 
@@ -177,24 +177,24 @@ On the Install Operator screen, leave default option:
 * Installation mode: A specific project on the cluster
 * Installed Namespace: Pick an existing project → openshift-workspaces
 
-##### Creating an instance of CodeReady Workspaces
+##### Creating an instance of OpenShift DevSpaces
 
-To create an instance of the Red Hat CodeReady Workspaces Operator, in the left panel, navigate to the **Operators** → **Installed Operators** section.
+To create an instance of the Red Hat OpenShift DevSpaces Operator, in the left panel, navigate to the **Operators** → **Installed Operators** section.
 
-In the Installed Operators screen, click the Red Hat CodeReady Workspaces name.
+In the Installed Operators screen, click the Red Hat OpenShift DevSpaces name.
 
 In the Operator Details screen, in the **Details** tab, inside of the Provided APIs section, click the **Create Instance** link.
 
-The Create CheCluster page contains the configuration of the overall CodeReady Workspaces instance to create. It is the CheCluster Custom Resource. Keep the default values.
+The Create CheCluster page contains the configuration of the overall OpenShift DevSpaces instance to create. It is the CheCluster Custom Resource. Keep the default values.
 
 To create the codeready-workspaces cluster, click the **Create** button in the lower left corner of the window.
 
-On the Operator Details screen, in the Red Hat CodeReady Workspaces Cluster tab, click on the codeready-workspaces link.
+On the Operator Details screen, in the Red Hat OpenShift DevSpaces Cluster tab, click on the codeready-workspaces link.
 
-To navigate to the codeready-workspaces instance, click the link under Red Hat CodeReady Workspaces URL.
+To navigate to the codeready-workspaces instance, click the link under Red Hat OpenShift DevSpaces URL.
 
 NOTE
-The installation might take more than 5 minutes. The URL appears after the Red Hat CodeReady Workspaces installation finishes.
+The installation might take more than 5 minutes. The URL appears after the Red Hat OpenShift DevSpaces installation finishes.
 
 ### Setup vote-ci project
 
@@ -378,7 +378,7 @@ oc edit triggertemplate vote-ui
 
 Do some change to the source code and verify that the pipeline starts.
 
-You can also use CodeReadyWorkspaces for that (change this URL with the one for your CodeReady Workspaces):
+You can also use CodeReadyWorkspaces for that (change this URL with the one for your OpenShift DevSpaces):
 
 [![Contribute](https://raw.githubusercontent.com/blues-man/cloud-native-workshop/demo/factory-contribute.svg)](https://codeready-openshift-workspaces.apps.cluster-6ef7.6ef7.sandbox74.opentlc.com/factory?url=https://github.com/blues-man/pipelines-vote-ui&policies.create=peruser)
 
@@ -401,10 +401,10 @@ NOTE: you can also trigger the Pipeline start by changing and pushing the code a
 We will pre-deploy the DEV environment in the **vote-app-dev** project.
 
 1. Fork this [vote-app-gitops](https://github.com/blues-man/vote-app-gitops) repository 
-2. Clone your repository fork in the **develop** branch:
+2. Clone your repository fork in the **main** branch:
 
 ```bash
-git clone -b develop https://github.com/blues-man/vote-app-gitops.git
+git clone https://github.com/blues-man/vote-app-gitops.git
 cd vote-app-gitops
 ```
 
@@ -424,7 +424,7 @@ spec:
   source: 
     path: environments/dev
     repoURL: https://github.com/blues-man/vote-app-gitops
-    targetRevision: develop
+    targetRevision: main
   syncPolicy: 
     automated:
       prune: true
@@ -459,9 +459,9 @@ Go to **Topology** view in **vote-app-dev** Project.
 
 Access the app from vote-ui **Route** clicking on the Python icon and then accessing Route URL.
 
-<img src="images/vote-ui.png" width=350>
+<img src="images/vote-app.png">
 
-#### 3. Edit app in CodeReady Workspaces
+#### 3. Edit app in OpenShift DevSpaces
 
 
 Edit source code from CRW by clicking on the little crw icon next to the **vote-ui** in the Topology view. This will launch Eclipse Che Factory reading the dev environment from the Devfile in the vote-ui repository.
@@ -588,7 +588,7 @@ metadata:
 
 Verify vote-ui and vote-api are deployed also in **vote-app-prod** project now.
 
-NOTE: CodeReady Workspaces icons are not present in the Topology view this time, because we haven't annoted the Deployment for that, as this is a Prod app!
+NOTE: OpenShift DevSpaces icons are not present in the Topology view this time, because we haven't annoted the Deployment for that, as this is a Prod app!
 
 #### 3. Auto detect drift
 

@@ -1,0 +1,21 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: guides
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.guides.repoUrl }}
+    targetRevision: {{ .Values.guides.repoRevision }}
+    path: {{ .Values.guides.repoPath }}
+    helm:
+      values: |
+        namespace: {{ .Values.guides.namespace }}
+        image: {{ .Values.guides.image }}
+  destination:
+    namespace: {{ .Values.guides.namespace }}
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}

@@ -1,0 +1,48 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: devspaces
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+{{- $userCount := int .Values.user.count }}
+{{- range $index := until $userCount }}
+      - user: {{ $.Values.user.prefix }}{{ add $index 1}}
+{{- end }}
+  template:
+    metadata:
+      name: devspaces-{{- "{{" }} user {{- " }}" }}
+      namespace: openshift-gitops
+    spec:
+      project: default
+      source:
+        repoURL: {{ .Values.devspaces.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.devspaces.git.repo }}
+        targetRevision: {{ .Values.devspaces.git.revision }}
+        path: {{ .Values.devspaces.git.path }}
+        helm:
+          values: |
+            namespace: '{{- "{{" }} user {{- " }}" }}{{ .Values.devspaces.values.namespacePostfix }}'
+            user: '{{- "{{" }} user {{- " }}" }}'
+            argocdNamespace: {{ .Values.argocd.values.namespacePrefix }}{{- "{{" }} user {{- " }}" }}
+            subdomain: {{ .Values.deployer.domain }}
+            namespacePermissions:
+              user: '{{- "{{" }} user {{- " }}" }}'
+              role: edit
+            git:
+              url: {{ .Values.devspaces.git.url | replace "http://" "" }}
+            app:
+              repo:
+                ui:
+                  url: {{ .Values.devspaces.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.devspaces.values.app.repo.ui.name }}
+                  revision: {{ .Values.devspaces.values.app.repo.ui.revision }}
+                  user: '{{- "{{" }} user {{- " }}" }}'
+                  password: {{ .Values.devspaces.values.app.repo.ui.password }}
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false

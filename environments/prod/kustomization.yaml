@@ -1,2 +1,56 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 bases:
   - ../../k8s/
+replicas:
+- name: vote-ui
+  count: 1
+patches:
+- patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-wave: "0"
+  target:
+    group: apps
+    kind: Deployment
+    name: vote-api
+    version: v1
+- patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-wave: "1"
+  target:
+    kind: Service
+    name: vote-api
+    version: v1
+- patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-wave: "2"
+  target:
+    group: apps
+    kind: Deployment
+    name: vote-ui
+    version: v1
+- patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-wave: "3"
+  target:
+    kind: Service
+    name: vote-ui
+    version: v1
+- patch: |-
+    - op: add
+      path: /metadata/annotations
+      value:
+        argocd.argoproj.io/sync-wave: "4"
+  target:
+    kind: Route
+    name: vote-ui
+    version: v1
+
