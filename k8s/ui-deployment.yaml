@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: python
   name: vote-ui
 spec:
-  replicas: 1
+  replicas: 3
   selector:
     matchLabels:
       app: vote-ui
@@ -27,7 +27,7 @@ spec:
           value: vote-api
         - name: VOTING_API_SERVICE_PORT
           value: "9000"
-        image: quay.io/bluesman/vote-ui:latest
+        image: quay.io/rhn_gps_njoshi/vote-ui:latest
         imagePullPolicy: Always
         name: vote-ui
         ports:
