@@ -3,13 +3,14 @@ kind: Subscription
 metadata:
   labels:
     operators.coreos.com/devspaces.openshift-operators: ""
-  name: devspaces
+  name: devworkspace
   namespace: openshift-operators
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  channel: stable
+  channel: fast
   installPlanApproval: Automatic
-  name: devspaces
+  name: devworkspace-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
+  startingCSV: devworkspace-operator.v0.25.0
