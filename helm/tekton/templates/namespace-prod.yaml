@@ -1,0 +1,10 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ .Values.app.namespaceProd }}
+  annotations:
+    openshift.io/description: "Prod Namespace"
+    openshift.io/display-name: "Prod Namespace"
+  labels:
+    argocd.argoproj.io/managed-by: {{ .Values.argocdNamespace }}

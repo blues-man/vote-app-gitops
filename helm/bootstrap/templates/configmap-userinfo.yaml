@@ -1,0 +1,11 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: userinfo
+  namespace: {{ .Values.infoNamespace }}
+  labels:
+    demo.redhat.com/userinfo: ""
+data:
+  usertool_url: "https://get-a-username-{{ .Values.usertool.namespace }}.{{ .Values.deployer.domain }}"
+  argocd_url: "https://openshift-gitops-server-openshift-gitops.{{ .Values.deployer.domain }}"

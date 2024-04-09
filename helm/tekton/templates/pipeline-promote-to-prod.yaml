@@ -1,0 +1,68 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: promote-to-prod
+  namespace: {{ .Values.tektonNamespace }}
+spec:
+  params:
+    - default: {{ .Values.app.namespaceDev }}/vote-ui:latest
+      name: SOURCE_IMAGE
+      type: string
+    - default: {{ .Values.app.namespaceProd }}/vote-ui:prod
+      name: DEST_IMAGE
+      type: string
+    - default: {{ .Values.app.repo.gitops.url }}
+      name: CONFIG_GIT_REPO
+      type: string
+    - default: {{ .Values.app.repo.gitops.revision }}
+      name: CONFIG_GIT_REVISION
+      type: string
+    - default: >-
+        image-registry.openshift-image-registry.svc:5000/{{ .Values.app.namespaceProd }}/vote-ui
+      name: IMAGE_NAME
+      type: string
+  tasks:
+    - name: tag-to-prod
+      params:
+        - name: SCRIPT
+          value: oc tag $(params.SOURCE_IMAGE) $(params.DEST_IMAGE)
+        - name: VERSION
+          value: latest
+      taskRef:
+        kind: ClusterTask
+        name: openshift-client
+    - name: image-tag-to-digest
+      params:
+        - name: image_dest_url
+          value: $(params.IMAGE_NAME)
+        - name: image_dest_tag
+          value: prod
+      runAfter:
+        - tag-to-prod
+      taskRef:
+        kind: Task
+        name: image-tag-to-digest
+    - name: git-update-deployment
+      params:
+        - name: GIT_REPOSITORY
+          value: $(params.CONFIG_GIT_REPO)
+        - name: GIT_REF
+          value: $(params.CONFIG_GIT_REVISION)
+        - name: CURRENT_IMAGE
+          value: quay.io/bluesman/vote-ui:latest
+        - name: NEW_IMAGE
+          value: $(params.IMAGE_NAME)
+        - name: NEW_DIGEST
+          value: $(tasks.image-tag-to-digest.results.image_digest)
+        - name: KUSTOMIZATION_PATH
+          value: environments/prod
+      runAfter:
+        - image-tag-to-digest
+      taskRef:
+        kind: Task
+        name: git-update-deployment
+      workspaces:
+        - name: workspace
+          workspace: app-source
+  workspaces:
+    - name: app-source

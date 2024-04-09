@@ -1,0 +1,28 @@
+---
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: vote-app-ui-pipeline
+  namespace: {{ .Values.tektonNamespace }}
+spec:
+  params:
+  - name: git-repo-url
+  - name: git-revision
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      generateName: vote-app-ui-pipeline-
+    spec:
+      params:
+      - name: SOURCE_GIT_URL
+        value: $(tt.params.git-repo-url)
+      - name: SOURCE_GIT_REVISION
+        value: $(tt.params.git-revision)
+      pipelineRef:
+        name: vote-app-ui-pipeline
+      workspaces:
+      - name: app-source
+        persistentVolumeClaim:
+          claimName: workspace-ui-app-source
+

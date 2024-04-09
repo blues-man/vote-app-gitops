@@ -1,0 +1,33 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: usertool
+  namespace: openshift-gitops
+spec:
+  project: default
+  source:
+    repoURL: {{ .Values.usertool.repoUrl }}
+    targetRevision: {{ .Values.usertool.repoRevision }}
+    path: {{ .Values.usertool.repoPath }}
+    helm:
+      values: |
+        usertoolNamespace: {{ .Values.usertool.namespace }}
+        image: {{ .Values.usertool.image }}
+        redis:
+          image: {{ .Values.usertool.redisImage }}
+        labAdminPassword: {{ .Values.usertool.labAdminPassword }}
+        labDuration: {{ .Values.usertool.labDuration }}
+        labAccessToken: {{ .Values.usertool.labAccessToken }}
+        labUserCount: "{{ .Values.user.count }}"
+        labUserPassword: {{ .Values.usertool.labUserPassword }}
+        labUserPrefix: {{ .Values.user.prefix }}
+        labExtraUrls: |-
+          {{ include "usertool.labExtraUrls" . }}
+        labModuleUrls: |-
+          {{ include "usertool.labModuleUrls" . }}
+  destination:
+    namespace: {{ .Values.usertool.namespace }}
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    automated: {}

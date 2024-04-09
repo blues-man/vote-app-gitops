@@ -1,0 +1,56 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: tekton
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+{{- $userCount := int .Values.user.count }}
+{{- range $index := until $userCount }}
+      - user: {{ $.Values.user.prefix }}{{ add $index 1}}
+{{- end }}
+  template:
+    metadata:
+      name: vote-app-ci-{{- "{{" }} user {{- " }}" }}
+      namespace: openshift-gitops
+    spec:
+      project: default
+      source:
+        repoURL: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.git.repo }}
+        targetRevision: {{ .Values.tekton.git.revision }}
+        path: {{ .Values.tekton.git.path }}
+        helm:
+          values: |
+            tektonNamespace: {{ .Values.tekton.values.namespacePrefix }}{{- "{{" }} user {{- " }}" }}
+            argocdNamespace: {{ .Values.argocd.values.namespacePrefix }}{{- "{{" }} user {{- " }}" }}
+            namespacePermissions:
+              user: '{{- "{{" }} user {{- " }}" }}'
+              role: edit
+            app:
+              namespaceDev: '{{ .Values.tekton.values.app.namespacePrefixDev }}{{- "{{" }} user {{- " }}" }}'
+              namespaceProd: '{{ .Values.tekton.values.app.namespacePrefixProd }}{{- "{{" }} user {{- " }}" }}'
+              repo:
+                api:
+                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.api.name }}
+                  revision: {{ .Values.tekton.values.app.repo.api.revision }}
+                  user: '{{- "{{" }} user {{- " }}" }}'
+                  password: {{ .Values.tekton.values.app.repo.api.password }}
+                ui:
+                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.ui.name }}
+                  revision: {{ .Values.tekton.values.app.repo.ui.revision }}
+                  user: '{{- "{{" }} user {{- " }}" }}'
+                  password: {{ .Values.tekton.values.app.repo.ui.password }}
+                gitops:
+                  url: {{ .Values.tekton.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.tekton.values.app.repo.gitops.name }}
+                  revision: {{ .Values.tekton.values.app.repo.gitops.revision }}
+                  user: '{{- "{{" }} user {{- " }}" }}'
+                  password: {{ .Values.tekton.values.app.repo.gitops.password }}
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false

@@ -1,0 +1,22 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: argocd
+  namespace: {{ .Values.argocdNamespace }}
+spec:
+  sso:
+    dex:
+      openShiftOAuth: true
+    provider: dex
+  rbac:
+    policy: |
+      g, system:cluster-admins, role:admin
+      g, cluster-admins, role:admin
+      g, {{ .Values.namespacePermissions.user }}, role:admin
+    scopes: '[name,groups]'
+  server:
+    route:
+      enabled: true
+      tls:
+        insecureEdgeTerminationPolicy: Redirect
+        termination: reencrypt

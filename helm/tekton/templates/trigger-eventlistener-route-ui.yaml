@@ -1,0 +1,13 @@
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: el-ui
+  namespace: {{ .Values.tektonNamespace }}
+spec:
+  port:
+    targetPort: http-listener
+  to:
+    kind: Service
+    name: el-eventlistener-ui
+    weight: 100

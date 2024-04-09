@@ -1,0 +1,21 @@
+# Default values for argocd.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+argocdNamespace: argocd
+
+namespacePermissions:
+  user: user
+  role: edit
+
+repos: []
+  # - type: git
+  #   name: app1
+  #   url: http://repo/user/app1
+  #   username: user1
+  #   password: password
+  # - type: git
+  #   name: app2
+  #   url: http://repo/user/app2
+  #   username: user2
+  #   password: password

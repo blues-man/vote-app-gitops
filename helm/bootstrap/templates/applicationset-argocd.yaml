@@ -1,0 +1,44 @@
+---
+apiVersion: argoproj.io/v1alpha1
+kind: ApplicationSet
+metadata:
+  name: argocd
+  namespace: openshift-gitops
+spec:
+  generators:
+  - list:
+      elements:
+{{- $userCount := int .Values.user.count }}
+{{- range $index := until $userCount }}
+      - user: {{ $.Values.user.prefix }}{{ add $index 1}}
+{{- end }}
+  template:
+    metadata:
+      name: argocd-{{- "{{" }} user {{- " }}" }}
+      namespace: openshift-gitops
+    spec:
+      project: default
+      source:
+        repoURL: {{ .Values.argocd.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ .Values.argocd.git.repo }}
+        targetRevision: {{ .Values.argocd.git.revision }}
+        path: {{ .Values.argocd.git.path }}
+        helm:
+          values: |
+            argocdNamespace: {{ .Values.argocd.values.namespacePrefix }}{{- "{{" }} user {{- " }}" }}
+            namespacePermissions:
+              user: '{{- "{{" }} user {{- " }}" }}'
+              role: edit
+            repos:
+{{- range $repo := .Values.argocd.values.repos }}
+              - type: {{ $repo.type }}
+                name: {{ $repo.name }}
+                url: {{ $.Values.argocd.git.url }}/{{- "{{" }} user {{- " }}" }}/{{ $repo.name }}
+                username: '{{- "{{" }} user {{- " }}" }}'
+                password: {{ $repo.password }}
+{{- end }}
+      destination:
+        server: https://kubernetes.default.svc
+      syncPolicy:
+        automated:
+          prune: false
+          selfHeal: false

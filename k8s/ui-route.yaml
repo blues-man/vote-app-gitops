@@ -1,8 +1,6 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
   labels:
     app: vote-ui
     app.kubernetes.io/part-of: vote-app
@@ -10,6 +8,9 @@ metadata:
 spec:
   port:
     targetPort: 8080-tcp
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
   to:
     kind: Service
     name: vote-ui
