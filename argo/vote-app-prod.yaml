@@ -10,7 +10,7 @@ spec:
   project: default 
   source: 
     path: environments/prod
-    repoURL: https://github.com/blues-man/vote-app-gitops
+    repoURL: https://github.com/nmalvankar/vote-app-gitops
     targetRevision: main
   syncPolicy: 
     automated:
