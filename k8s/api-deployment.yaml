@@ -22,7 +22,7 @@ spec:
         app: vote-api
     spec:
       containers:
-      - image: quay.io/bluesman/vote-api:latest
+      - image: quay.io/rhn_gps_njoshi/vote-api:latest
         imagePullPolicy: Always
         name: vote-api
         ports:
