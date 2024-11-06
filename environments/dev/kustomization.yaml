@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
 - ../../k8s/
 images:
-- digest: sha256:d03e0b63bbd7e769437590181f81a6bfe84dd90d618cfa6b2cf2ccce9c62a570
+- digest: sha256:a7b077635a43a187d1641610c7e134537d3ae5bc8911702fd3b5e5c0543e622e
   name: quay.io/bluesman/vote-ui
   newName: quay.io/bluesman/vote-ui
